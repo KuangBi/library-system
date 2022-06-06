@@ -4,6 +4,11 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+
+/**
+ * @author shkstart
+ * @create 2022-06-06 19:49
+ */
 public class MD5Util {
 
     /**

@@ -1,6 +1,8 @@
-package com.dto;
+package com.common;
 
 import com.sun.org.apache.xalan.internal.xsltc.compiler.util.StringType;
+
+import java.util.Objects;
 
 /**
  * @author shkstart
@@ -9,7 +11,7 @@ import com.sun.org.apache.xalan.internal.xsltc.compiler.util.StringType;
 public enum TypeEnum {
 
      TYPE_NATURE("nature","自然"),
-     TYPE_TECH("tech","人文科学"),
+     TYPE_TECH("tech","科学"),
      TYPE_HISTORY("history","历史");
 
      private String typeCode;
@@ -18,6 +20,15 @@ public enum TypeEnum {
     private TypeEnum(String typeCode, String typeDesc) {
         this.typeCode = typeCode;
         this.typeDesc = typeDesc;
+    }
+
+    public static String getDescByCode(String typeCode) {
+        for(TypeEnum typeEnum: TypeEnum.values()){
+            if(Objects.equals(typeEnum.typeCode, typeCode)){
+                return typeEnum.typeDesc;
+            }
+        }
+        return null;
     }
 
     public String getTypeCode() {

@@ -7,6 +7,7 @@ import java.util.List;
 /**
  * @author shkstart
  * @create 2022-06-04 15:38
+ * 书架服务
  */
 public interface BuildService {
     /**
@@ -26,5 +27,5 @@ public interface BuildService {
      */
     List<BookBuildDTO> getBuildList() throws Exception;
 
-    BookBuildDTO getBuild(Integer id) throws Exception;
+    BookBuildDTO getBookBuildById(Integer id) throws Exception;
 }

@@ -13,6 +13,8 @@ public class PageResult<T> {
     private int currentPage;//当前页码
     private int rows;//每页显示的记录数
 
+
+
     public int getTotalCount() {
         return totalCount;
     }

@@ -8,15 +8,10 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
 
+
 /**
- * 包名:com.atguigu.jdbc.utils
- *
- * @author Leevi
- * 日期2021-04-29  15:15
- * 这个工具类中会提供仨方法:
- * 1. 获取连接池对象
- * 2. 从连接池中获取连接
- * 3. 将链接归还到连接池
+ * @author shkstart
+ * @create 2022-06-06 19:49
  */
 public class JDBCUtil {
     private static DataSource dataSource;

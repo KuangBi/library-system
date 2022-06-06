@@ -33,7 +33,7 @@ public class BuildServiceImpl implements BuildService {
     }
 
     @Override
-    public BookBuildDTO getBuild(Integer id) throws Exception {
+    public BookBuildDTO getBookBuildById(Integer id) throws Exception {
         return buildDAO.getBookBuildById(id);
     }
 }

@@ -1,32 +1,33 @@
-package com.dvo;
+package com.web.vo;
 
 /**
  * @author shkstart
  * @create 2022-06-06 19:49
  */
-public class BookVo {
+public class BookVO {
     //外键id
     private Integer id;
     private String bookName;
     private String author;
     private Integer buildId;
-    private String type;
+    private String typeCode;
+    private String typeName;
     private String introduce;
     private String imgPath;
     private String buildName;
 
-    public BookVo(Integer id, String bookName, String author, Integer buildId, String type, String introduce, String imgPath, String buildName) {
+    public BookVO(Integer id, String bookName, String author, Integer buildId, String typeCode, String introduce, String imgPath, String buildName) {
         this.id = id;
         this.bookName = bookName;
         this.author = author;
         this.buildId = buildId;
-        this.type = type;
+        this.typeCode = typeCode;
         this.introduce = introduce;
         this.imgPath = imgPath;
         this.buildName = buildName;
     }
 
-    public BookVo() {
+    public BookVO() {
     }
 
     public Integer getId() {
@@ -61,12 +62,12 @@ public class BookVo {
         this.buildId = buildId;
     }
 
-    public String getType() {
-        return type;
+    public String getTypeCode() {
+        return typeCode;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setTypeCode(String typeCode) {
+        this.typeCode = typeCode;
     }
 
     public String getIntroduce() {
@@ -91,5 +92,13 @@ public class BookVo {
 
     public void setBuildName(String buildName) {
         this.buildName = buildName;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 }
