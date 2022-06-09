@@ -23,18 +23,15 @@
 <body>
 <div class="container" style="width: 400px;" id="app">
     <h3 style="text-align: center;">图书管理系统</h3>
-
+   
     <div  v-if="skip">
         <form action="${pageContext.request.contextPath}/user?method=doLogin" method="post">
             <div class="form-group">
-                <label for="uId">用户号：</label>
-                <input type="text" name="uId" class="form-control" id="uId" placeholder="请输入唯一id"/>
+                <label for="uid">用户号：</label>
+                <input type="text" name="uid" class="form-control" id="uid" placeholder="请输入唯一id"/>
             </div>
 
-            <div class="form-group">
-                <label for="userName">用户名：</label>
-                <input type="text" name="userName" class="form-control" id="userName" placeholder="请输入用户名"/>
-            </div>
+
 
             <div class="form-group">
                 <label for="password">密码：</label>
@@ -66,12 +63,9 @@
         <form   action="${pageContext.request.contextPath}/user?method=doLogin" method="post">
             <div class="form-group">
                 <label for="uId">管理员ID</label>
-                <input type="text" name="uId" class="form-control" id="uId" placeholder="请输入管理员ID"/>
+                <input type="text" name="uid" class="form-control" id="uId" placeholder="请输入管理员ID"/>
             </div>
-            <div class="form-group">
-                <label for="userName">管理员名：</label>
-                <input type="text" name="userName" class="form-control" id="userName" placeholder="请输入管理员名"/>
-            </div>
+
 
             <div class="form-group">
                 <label for="password">密码：</label>

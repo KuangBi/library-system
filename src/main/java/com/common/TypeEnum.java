@@ -1,6 +1,6 @@
 package com.common;
 
-import com.sun.org.apache.xalan.internal.xsltc.compiler.util.StringType;
+
 
 import java.util.Objects;
 
@@ -23,7 +23,9 @@ public enum TypeEnum {
     }
 
     public static String getDescByCode(String typeCode) {
+        //将枚举类转变为一个枚举类型的数组.values()
         for(TypeEnum typeEnum: TypeEnum.values()){
+            //源码return (a == b) || (a != null && a.equals(b));
             if(Objects.equals(typeEnum.typeCode, typeCode)){
                 return typeEnum.typeDesc;
             }

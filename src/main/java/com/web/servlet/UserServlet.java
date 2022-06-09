@@ -45,12 +45,17 @@ public class UserServlet extends ModelBaseServlet {
             e.printStackTrace();
         }
         //调用service查询
-
+        System.out.println(user);
         UserDTO loginUser = userService.getUser(user.getUid());
         if(loginUser != null){
             session.setAttribute("user",loginUser);
+            if (Integer.valueOf(1234).equals((Integer) loginUser.getUid()) && "1234".equals(loginUser.getPassword())){
+                session.setAttribute("state",1);
+                System.out.println("管理员"+session.getAttribute("state"));
+
+            }
             //${pageContext.request.contextPath}是JSP取得绝对路径的方法，等价于<%=request.getContextPath()%>
-            response.sendRedirect(request.getContextPath()+"/manager?method=getBookList");
+            response.sendRedirect(request.getContextPath()+"/book?method=getBookList");
         }else {
             request.setAttribute("log_msg","用户名或密码错误");
             request.getRequestDispatcher("/login.jsp").forward(request,response);
@@ -67,4 +72,11 @@ public class UserServlet extends ModelBaseServlet {
         userService.saveUser(user);
         response.sendRedirect(request.getContextPath()+"/login.jsp");
     }
+    /**
+     * 退出登录
+     */
+    public void doQuit(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        response.sendRedirect(request.getContextPath()+"/login.jsp");
+    }
+
 }

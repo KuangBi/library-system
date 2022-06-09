@@ -4,6 +4,7 @@ import com.dto.BookDTO;
 import org.junit.Test;
 import com.dao.*;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,16 @@ public class TestDAO {
         List<BookDTO> list = bookDAO.pageListByParam(0, 5, map);
         for (BookDTO bookDTO:list){
             System.out.println(bookDTO);
+        }
+
+    }
+    @Test
+    public void testBook1(){
+       BookDAO bookDAO=new BookDAO();
+        try {
+            bookDAO.deleteBook(Integer.parseInt("1"));
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
     }

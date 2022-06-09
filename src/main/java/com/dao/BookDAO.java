@@ -80,9 +80,9 @@ public class BookDAO extends BaseDAO<BookDTO> {
 
         for (String key:keySet){
             sb.append(" and "+key+" like ? ");
-            System.out.println(key);
+            System.out.println("查list的key"+key);
             params.add("%"+paramMap.get(key)+"%");//?是条件的值
-            System.out.println(paramMap.get(key));
+            System.out.println("查list的值"+paramMap.get(key));
 
         }
 
@@ -90,6 +90,8 @@ public class BookDAO extends BaseDAO<BookDTO> {
         params.add(start);
         params.add(rows);
         sql = sb.toString();
+        System.out.println(sb.toString());
+        System.out.println(params);
         return template.query(sql,new BeanPropertyRowMapper<BookDTO>(BookDTO.class),params.toArray());
 
     }
@@ -107,8 +109,8 @@ public class BookDAO extends BaseDAO<BookDTO> {
 
         }
 
-        System.out.println(sb.toString());
-        System.out.println(params);
+        /*System.out.println(sb.toString());
+        System.out.println(params);*/
         return template.queryForObject(sb.toString(),Integer.class,params.toArray());
     }
 

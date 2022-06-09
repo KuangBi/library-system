@@ -4,6 +4,7 @@ package com.web.servlet; /**
  */
 
 import com.common.TypeEnum;
+import com.dao.BookDAO;
 import com.dto.BookDTO;
 import com.dto.PageResult;
 import com.mysql.jdbc.StringUtils;
@@ -13,11 +14,16 @@ import com.service.BuildService;
 import com.service.impl.BookServiceImpl;
 import com.service.impl.BuildServiceImpl;
 import com.web.servlet.base.ModelBaseServlet;
+import org.apache.commons.beanutils.BeanUtils;
 
 import javax.servlet.http.*;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static java.lang.System.out;
+import static java.lang.System.setOut;
 
 public class BookServlet extends ModelBaseServlet {
     BookService bookService=new BookServiceImpl();
@@ -32,6 +38,7 @@ public class BookServlet extends ModelBaseServlet {
         //1.获取参数
         String currentPage = request.getParameter("currentPage");//当前页码
         String rows = request.getParameter("rows");//每页显示条数
+
         currentPage = StringUtils.isNullOrEmpty(currentPage)?"1": currentPage;
         rows = StringUtils.isNullOrEmpty(rows)? "5": rows;
 
@@ -39,7 +46,9 @@ public class BookServlet extends ModelBaseServlet {
         Map<String, String[]> condition = request.getParameterMap();
         PageResult<BookDTO> pb = bookService.findByPage(currentPage,rows,condition);
         List<BookVO> bookVOList = new ArrayList<BookVO>();
+
         for (BookDTO bookDTO: pb.getList()){
+            out.println(bookDTO);
             BookVO bookVO =new BookVO();
             bookVO.setId(bookDTO.getId());
             bookVO.setBookName(bookDTO.getBookName());
@@ -56,11 +65,46 @@ public class BookServlet extends ModelBaseServlet {
         //3.将PageBean存入request
         PageResult<BookVO> pageResult = new PageResult();
         pageResult.setList(bookVOList);
+        pageResult.setCurrentPage(pb.getCurrentPage());
+        pageResult.setRows(pb.getRows());
+        pageResult.setTotalPage(pb.getTotalPage());
+        pageResult.setTotalCount(pb.getTotalCount());
+
         request.setAttribute("pb",pageResult);
         request.setAttribute("condition",condition);//将查询条件存入request
         //4.转发到list.jsp,请求转发不需要虚拟目录
+        HttpSession session = request.getSession();
+
+        if (Integer.valueOf(1).equals((Integer) session.getAttribute("state"))){
+
+            request.getRequestDispatcher("/manList.jsp").forward(request,response);
+            return;
+
+        }
         request.getRequestDispatcher("/userList.jsp").forward(request,response);
     }
+    public void delBook(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        String id = request.getParameter("id");
+        out.println(id);
+        bookService.removeBook(Integer.parseInt(id));
+       response.sendRedirect(request.getContextPath()+"/book?method=getBookList");
 
+
+    }
+    public void updateBook(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        String id = request.getParameter("id");
+        request.setAttribute("id",id);
+
+    }
+    public void addBook(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        Map<String, String[]> map = request.getParameterMap();
+        BookDTO book=new BookDTO();
+        BeanUtils.populate(book,map);
+        bookService.saveBook(book);
+        PrintWriter out = response.getWriter();
+        //out.println("<script>alert('添加书籍成功');location.href='book?method=getBookList';</script>");
+        //request.getRequestDispatcher("/book?method=getBookList").forward(request,response);
+        response.sendRedirect(request.getContextPath()+"/book?method=getBookList");
+    }
 
 }

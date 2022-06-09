@@ -82,7 +82,7 @@ public class BookServiceImpl implements BookService {
                     continue;
                 }
                 String value=condition.get(key)[0];
-                if ("build_name".equals(key)){
+                /*if ("build_name".equals(key)){
                     if (value !=null && !"".equals(value)) {
                         try {
                             BookBuildDTO bean = buildDAO.getBookBuildByName(value );
@@ -91,7 +91,7 @@ public class BookServiceImpl implements BookService {
                             e.printStackTrace();
                         }
                     }
-                }
+                }*/
 
                 if(value != null&& !"".equals(value)){
                     keyValueMap.put(key,value);
@@ -115,7 +115,7 @@ public class BookServiceImpl implements BookService {
                     continue;
                 }
                 String value=condition.get(key)[0];
-                if ("build_name".equals(key)){
+                /*if ("build_name".equals(key)){
                     if (value !=null && !"".equals(value)) {
                         try {
                             BookBuildDTO bean = buildDAO.getBookBuildByName(value );
@@ -124,7 +124,7 @@ public class BookServiceImpl implements BookService {
                             e.printStackTrace();
                         }
                     }
-                }
+                }*/
 
                 if(value != null&& !"".equals(value)){
                     keyValueMap.put(key,value);

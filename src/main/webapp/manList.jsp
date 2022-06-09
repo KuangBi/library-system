@@ -34,7 +34,7 @@
     <script>
         function delUser(id){
             if(confirm("您确定要删除吗")){
-                location.href="${pageContext.request.contextPath}/delServlet?id="+id;
+                location.href="${pageContext.request.contextPath}/book?method=delBook&id="+id;
             }
 
         }
@@ -94,10 +94,10 @@
 
                     <li><a href="#">${userName}张三</a></li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">其他<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">个人信息</a></li>
-                            <li><a href="#"> 我的借还</a></li>
+                            <li><a href="#">管理书架号</a></li>
+                            <li><a href="#">管理借阅信息</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="#">修改密码</a></li>
                         </ul>
@@ -112,30 +112,41 @@
     <!-- 分隔线，以上是导航条      -->
     <div style="float: left;margin: 10px; ">
         <!-- form提交数据为空，情况两种，一种没设置action，一种没设置name属性-->
-        <form class="form-inline" action="${pageContext.request.contextPath}/findUserByPageServlet" method="post">
-        <div class="form-group">
-            <label for="exampleInputName2">姓名</label>
-            <input type="text" name="name" value="${condition.name[0]}" class="form-control" id="exampleInputName2" >
-        </div>
+        <form class="form-inline" action="${pageContext.request.contextPath}/book?method=getBookList" method="post">
             <div class="form-group">
-                <label for="exampleInputName3">籍贯</label>
-                <input type="text" name="address" value="${condition.address[0]}" class="form-control" id="exampleInputName3" >
+                <label for="exampleInputName2">图书名称</label>
+                <input type="text" name="book_name" value="${condition.book_name[0]}" class="form-control" id="exampleInputName2" >
             </div>
-        <div class="form-group">
-            <label for="exampleInputEmail2">Email</label>
-            <input type="text" name="email"  value="${condition.email[0]}"class="form-control" id="exampleInputEmail2" >
-        </div>
-        <button type="submit" class="btn btn-default">查询</button>
-    </form></div>
+            <div class="form-group">
+                <label for="exampleInputName3">书架</label>
+                <input type="text" name="build_id" value="${condition.build_id[0]}" class="form-control" id="exampleInputName3" >
+            </div>
+            <div class="form-group">
+                <%--
+                <input type="text" name="type_id"  value="${condition.type_name[0]}"class="form-control" id="exampleInputEmail2" >--%>
+
+                <label for="exampleInputEmail2">类型</label>
+                <select name="type" id="exampleInputEmail2">
+
+                    <option value="1" >神话</option>
+                    <option value="2" >经济</option>
+                    <option value="3" >计算机技术</option>
+                    <option value="4" >人物</option>
+
+                </select>
+            </div>
+            <button type="submit" class="btn btn-default">查询</button>
+        </form>
+    </div>
     <div style="float: right;margin: 10px; padding: 5px">
-        <a class="btn btn-primary" href="${pageContext.request.contextPath}/add.jsp" style="margin: 5px">添加联系人</a>
+        <a class="btn btn-primary" href="${pageContext.request.contextPath}/add.jsp" style="margin: 5px">添加图书</a>
         <a class="btn btn-primary" id="select" href="javascript:void(0);">删除选中</a>
     </div>
     <!-- from表单可以提交多次复选框-->
     <form id="form" action="${pageContext.request.contextPath}/delSelectServlet">
     <table border="1" class="table table-bordered table-hover">
         <tr class="success">
-            <th><input type="checkbox" id="firstCb"></th>
+
             <th>编号</th>
             <th>书名</th>
             <th>作者</th>
@@ -147,18 +158,18 @@
 
         <c:forEach items="${pb.list}" var="book" varStatus="s">
             <tr>
-                <th><input type="checkbox" name="id" value="${book.id}"></th>
+
 
                 <td>${book.id}</td>
                 <td>${book.bookName}</td>
                 <td>${book.author}</td>
-                <td>${book.buildId}</td>
-                <td>${book.typeId}</td>
-                <td>${book.desc}</td>
+                <td>${book.buildName}</td>
+                <td>${book.typeName}</td>
+                <td>${book.introduce}</td>
 
-                <td><a class="btn btn-default btn-sm" href="${pageContext.request.contextPath}/findUserServlet?id=${book.id}">借阅</a>&nbsp;
+                <td><a class="btn btn-default btn-sm" href="#">修改</a>&nbsp;
                     <!--写delete是JavaScript内置方法，换个方法名 -->
-                    <a class="btn btn-default btn-sm" href="javascript:delUser(${book.id});">归还</a></td>
+                    <a class="btn btn-default btn-sm" href="javascript:delUser(${book.id});">删除</a></td></td>
             </tr>
 
         </c:forEach>
@@ -169,35 +180,35 @@
     </form>
     <nav aria-label="Page navigation">
         <ul class="pagination">
-              <c:if test="${pb.currentPage == 1}">
-                 <li class="disabled">
+            <c:if test="${pb.currentPage == 1}">
+            <li class="disabled">
 
                 </c:if>
 
                 <c:if test="${pb.currentPage != 1}">
-                  <li>
+            <li>
                 </c:if>
-                <a href="${pageContext.request.contextPath}/findUserByPageServlet?currentPage=${pb.currentPage-1}&rows=5&name=${condition.name[0]}&address=${condition.address[0]}&email=${condition.email[0]}" aria-label="Previous">
+                <a href="${pageContext.request.contextPath}/book?method=getBookList&currentPage=${pb.currentPage-1}&rows=5&name=${condition.name[0]}&address=${condition.address[0]}&email=${condition.email[0]}" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
 
             <c:forEach begin="1" end="${pb.totalPage}" var="i">
                 <c:if test="${pb.currentPage==i}">
-                    <li><a class="active" href="${pageContext.request.contextPath}/findUserByPageServlet?currentPage=${i}&rows=5&name=${condition.name[0]}&address=${condition.address[0]}&email=${condition.email[0]}">${i}</a></li>
+                    <li><a class="active" href="${pageContext.request.contextPath}/book?method=getBookList&currentPage=${i}&rows=5&book_name=${condition.book_name[0]}&build_id=${condition.build_id[0]}&type=${condition.type[0]}">${i}</a></li>
                 </c:if>
                 <c:if test="${pb.currentPage!=i}">
-                    <li><a  href="${pageContext.request.contextPath}/findUserByPageServlet?currentPage=${i}&rows=5&name=${condition.name[0]}&address=${condition.address[0]}&email=${condition.email[0]}">${i}</a></li>
+                    <li><a  href="${pageContext.request.contextPath}/book?method=getBookList&currentPage=${i}&rows=5&book_name=${condition.book_name[0]}&build_id=${condition.build_id[0]}&type=${condition.type[0]}">${i}</a></li>
                 </c:if>
             </c:forEach>
-                  <c:if test="${pb.currentPage == pb.totalPage}">
-                        <li class="disabled">
-                      </c:if>
+            <c:if test="${pb.currentPage == pb.totalPage}">
+            <li class="disabled">
+                </c:if>
 
-                      <c:if test="${pb.currentPage !=pb.totalPage}">
-                         <li>
-                      </c:if>
-                <a href="${pageContext.request.contextPath}/findUserByPageServlet?currentPage=${pb.currentPage+1}&rows=5&name=${condition.name[0]}&address=${condition.address[0]}&email=${condition.email[0]}" aria-label="Next">
+                <c:if test="${pb.currentPage !=pb.totalPage}">
+            <li>
+                </c:if>
+                <a href="${pageContext.request.contextPath}/book?method=getBookList&currentPage=${pb.currentPage+1}&rows=5&book_name=${condition.book_name[0]}&build_id=${condition.build_id[0]}&type=${condition.type[0]}" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>

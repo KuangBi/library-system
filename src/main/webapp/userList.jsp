@@ -64,14 +64,15 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
 
-                    <li><a href="#">${userName}张三</a></li>
+                    <li><a href="#">${user.userName}</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">切换 <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="#">个人信息</a></li>
                             <li><a href="#"> 我的借还</a></li>
-                            <li role="separator" class="divider"></li>
                             <li><a href="#">修改密码</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="${pageContext.request.contextPath}/user?method=doQuit">退出登录</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -100,15 +101,16 @@
                 <label for="exampleInputEmail2">类型</label>
                 <select name="type" id="exampleInputEmail2">
 
-                        <option value="TypeDTO.MYTH" >神话</option>
-                        <option value="TypeDTO.ECONOMICS" >经济</option>
-                        <option value="TypeDTO.COMPUTERTECH" >计算机技术</option>
-                        <option value="TypeDTO.FIGURE" selected>人物</option>
+                        <option value="1" >神话</option>
+                        <option value="2" >经济</option>
+                        <option value="3" >计算机技术</option>
+                        <option value="4" selected>人物</option>
 
                 </select>
         </div>
         <button type="submit" class="btn btn-default">查询</button>
-    </form></div>
+    </form>
+    </div>
 
     <!-- from表单可以提交多次复选框-->
     <form id="form" action="${pageContext.request.contextPath}/delSelectServlet">
@@ -131,8 +133,8 @@
                 <td>${book.id}</td>
                 <td>${book.bookName}</td>
                 <td>${book.author}</td>
-                <td>${book.buildDTO.buildName}</td>
-                <td>${book.type}</td>
+                <td>${book.buildName}</td>
+                <td>${book.typeName}</td>
                 <td>${book.introduce}</td>
 
                 <td><a class="btn btn-default btn-sm" href="${pageContext.request.contextPath}/findUserServlet?id=${book.id}">借阅</a>&nbsp;
@@ -163,10 +165,10 @@
 
             <c:forEach begin="1" end="${pb.totalPage}" var="i">
                 <c:if test="${pb.currentPage==i}">
-                    <li><a class="active" href="${pageContext.request.contextPath}/manager?method=getBookList&currentPage=${i}&rows=5&name=${condition.name[0]}&address=${condition.address[0]}&email=${condition.email[0]}">${i}</a></li>
+                    <li><a class="active" href="${pageContext.request.contextPath}/manager?method=getBookList&currentPage=${i}&rows=5&book_name=${condition.book_name[0]}&build_id=${condition.build_id[0]}&type=${condition.type[0]}">${i}</a></li>
                 </c:if>
                 <c:if test="${pb.currentPage!=i}">
-                    <li><a  href="${pageContext.request.contextPath}/manager?method=getBookList&currentPage=${i}&rows=5&name=${condition.name[0]}&address=${condition.address[0]}&email=${condition.email[0]}">${i}</a></li>
+                    <li><a  href="${pageContext.request.contextPath}/manager?method=getBookList&currentPage=${i}&rows=5&book_name=${condition.book_name[0]}&build_id=${condition.build_id[0]}&type=${condition.type[0]}">${i}</a></li>
                 </c:if>
             </c:forEach>
                   <c:if test="${pb.currentPage == pb.totalPage}">
@@ -176,7 +178,7 @@
                       <c:if test="${pb.currentPage !=pb.totalPage}">
                          <li>
                       </c:if>
-                <a href="${pageContext.request.contextPath}/manager?method=getBookList&currentPage=${pb.currentPage+1}&rows=5&name=${condition.name[0]}&address=${condition.address[0]}&email=${condition.email[0]}" aria-label="Next">
+                <a href="${pageContext.request.contextPath}/manager?method=getBookList&currentPage=${pb.currentPage+1}&rows=5&book_name=${condition.book_name[0]}&build_id=${condition.build_id[0]}&type=${condition.type[0]}" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
