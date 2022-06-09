@@ -45,10 +45,10 @@ public class BookDAO extends BaseDAO<BookDTO> {
     }*/
 
 
-    /*public BookDTO getBookDTOById(Integer id) throws SQLException {
-        String sql="select id,book_name bookName,author,build_id buildId,type_name typeName,introduce,img_path imgPath from book where id=? ";
+    public BookDTO getBookDTOById(Integer id) throws SQLException {
+        String sql="select id,book_name bookName,author,build_id buildId,type ,introduce,img_path imgPath from book where id=? ";
         return getBean(BookDTO.class,sql,id);
-    }*/
+    }
 
 
     /*public BookDTO getBookDTOByBuildId(Integer BuildId) throws SQLException {

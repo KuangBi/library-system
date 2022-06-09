@@ -33,6 +33,10 @@ public class BookServiceImpl implements BookService {
         bookDAO.deleteBook(Id);
     }
 
+    public BookDTO getBookById(Integer id) throws Exception{
+        return  bookDAO.getBookDTOById(id);
+
+    }
 
 
 
@@ -51,6 +55,10 @@ public class BookServiceImpl implements BookService {
 
         //2.调用dao查询总记录数
         int totalCount = findTotalCount(condition);
+        int totalPage = (totalCount % rows)  == 0 ? totalCount/rows : (totalCount/rows) + 1;
+        if (currentPage>=totalPage){
+            currentPage=totalPage;
+        }
         pb.setTotalCount(totalCount);
         //3.调用dao查询List集合
         //计算开始的记录索引
@@ -61,7 +69,7 @@ public class BookServiceImpl implements BookService {
         pb.setList(list);
 
         //4.计算总页码
-        int totalPage = (totalCount % rows)  == 0 ? totalCount/rows : (totalCount/rows) + 1;
+
         pb.setTotalPage(totalPage);
         if(currentPage>=totalPage){
             currentPage=totalPage;

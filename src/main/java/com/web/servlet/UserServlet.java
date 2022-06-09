@@ -49,7 +49,7 @@ public class UserServlet extends ModelBaseServlet {
         UserDTO loginUser = userService.getUser(user.getUid());
         if(loginUser != null){
             session.setAttribute("user",loginUser);
-            if (Integer.valueOf(1234).equals((Integer) loginUser.getUid()) && "1234".equals(loginUser.getPassword())){
+            if (Integer.valueOf(1234).equals(loginUser.getUid()) && "1234".equals(loginUser.getPassword())){
                 session.setAttribute("state",1);
                 System.out.println("管理员"+session.getAttribute("state"));
 

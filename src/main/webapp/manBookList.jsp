@@ -96,10 +96,12 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">其他<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">管理书架号</a></li>
-                            <li><a href="#">管理借阅信息</a></li>
+
+                            <li><a href="${pageContext.request.contextPath}/build?method=getBuildList">书架号管理</a></li>
+                            <li><a href="${pageContext.request.contextPath}/book?method=getBookList">图书借阅管理</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="#">修改密码</a></li>
+                            <li><a href="${pageContext.request.contextPath}/user?method=doQuit">退出登录</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -139,7 +141,7 @@
         </form>
     </div>
     <div style="float: right;margin: 10px; padding: 5px">
-        <a class="btn btn-primary" href="${pageContext.request.contextPath}/add.jsp" style="margin: 5px">添加图书</a>
+        <a class="btn btn-primary" href="${pageContext.request.contextPath}/bookAdd.jsp" style="margin: 5px">添加图书</a>
         <a class="btn btn-primary" id="select" href="javascript:void(0);">删除选中</a>
     </div>
     <!-- from表单可以提交多次复选框-->
@@ -167,7 +169,7 @@
                 <td>${book.typeName}</td>
                 <td>${book.introduce}</td>
 
-                <td><a class="btn btn-default btn-sm" href="#">修改</a>&nbsp;
+                <td><a class="btn btn-default btn-sm" href="${pageContext.request.contextPath}/book?method=toUpdateBook&id=${book.id}">修改</a>&nbsp;
                     <!--写delete是JavaScript内置方法，换个方法名 -->
                     <a class="btn btn-default btn-sm" href="javascript:delUser(${book.id});">删除</a></td></td>
             </tr>

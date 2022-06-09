@@ -21,4 +21,12 @@
         <servlet-name>BookServlet</servlet-name>
         <url-pattern>/book</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>BuildServlet</servlet-name>
+        <servlet-class>com.web.servlet.BuildServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BuildServlet</servlet-name>
+        <url-pattern>/build</url-pattern>
+    </servlet-mapping>
 </web-app>

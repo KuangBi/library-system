@@ -32,13 +32,10 @@ public class TestDAO {
 
     }
     @Test
-    public void testBook1(){
+    public void testBook1() throws SQLException {
        BookDAO bookDAO=new BookDAO();
-        try {
-            bookDAO.deleteBook(Integer.parseInt("1"));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        BookDTO bookDTOById = bookDAO.getBookDTOById(1);
+        System.out.println(bookDTOById);
 
     }
 }

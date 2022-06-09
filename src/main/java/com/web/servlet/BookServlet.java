@@ -4,7 +4,6 @@ package com.web.servlet; /**
  */
 
 import com.common.TypeEnum;
-import com.dao.BookDAO;
 import com.dto.BookDTO;
 import com.dto.PageResult;
 import com.mysql.jdbc.StringUtils;
@@ -17,13 +16,11 @@ import com.web.servlet.base.ModelBaseServlet;
 import org.apache.commons.beanutils.BeanUtils;
 
 import javax.servlet.http.*;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import static java.lang.System.out;
-import static java.lang.System.setOut;
 
 public class BookServlet extends ModelBaseServlet {
     BookService bookService=new BookServiceImpl();
@@ -48,7 +45,7 @@ public class BookServlet extends ModelBaseServlet {
         List<BookVO> bookVOList = new ArrayList<BookVO>();
 
         for (BookDTO bookDTO: pb.getList()){
-            out.println(bookDTO);
+            //out.println(bookDTO);
             BookVO bookVO =new BookVO();
             bookVO.setId(bookDTO.getId());
             bookVO.setBookName(bookDTO.getBookName());
@@ -77,11 +74,11 @@ public class BookServlet extends ModelBaseServlet {
 
         if (Integer.valueOf(1).equals((Integer) session.getAttribute("state"))){
 
-            request.getRequestDispatcher("/manList.jsp").forward(request,response);
+            request.getRequestDispatcher("/manBookList.jsp").forward(request,response);
             return;
 
         }
-        request.getRequestDispatcher("/userList.jsp").forward(request,response);
+        request.getRequestDispatcher("/userBookList.jsp").forward(request,response);
     }
     public void delBook(HttpServletRequest request, HttpServletResponse response) throws Exception{
         String id = request.getParameter("id");
@@ -91,9 +88,22 @@ public class BookServlet extends ModelBaseServlet {
 
 
     }
-    public void updateBook(HttpServletRequest request, HttpServletResponse response) throws Exception{
+    public void toUpdateBook(HttpServletRequest request, HttpServletResponse response) throws Exception{
         String id = request.getParameter("id");
-        request.setAttribute("id",id);
+        //bookService.editBook();
+        BookDTO book = bookService.getBookById(Integer.valueOf(id));
+        request.setAttribute("book",book);
+        request.getRequestDispatcher("/bookUpdate.jsp").forward(request,response);
+
+
+    }
+    public void updateBook(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        Map<String, String[]> map = request.getParameterMap();
+        BookDTO book=new BookDTO();
+        BeanUtils.populate(book,map);
+        bookService.editBook(book);
+        response.sendRedirect(request.getContextPath()+"/book?method=getBookList");
+
 
     }
     public void addBook(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -101,7 +111,7 @@ public class BookServlet extends ModelBaseServlet {
         BookDTO book=new BookDTO();
         BeanUtils.populate(book,map);
         bookService.saveBook(book);
-        PrintWriter out = response.getWriter();
+        //PrintWriter out = response.getWriter();
         //out.println("<script>alert('添加书籍成功');location.href='book?method=getBookList';</script>");
         //request.getRequestDispatcher("/book?method=getBookList").forward(request,response);
         response.sendRedirect(request.getContextPath()+"/book?method=getBookList");

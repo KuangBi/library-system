@@ -1,5 +1,6 @@
 package com.test;
 
+import com.dto.BookBuildDTO;
 import com.dto.BookDTO;
 import com.dto.PageResult;
 import com.service.BookService;
@@ -52,5 +53,13 @@ public class TestSer {
         String s="3";
         String id=buildService.getBookBuildById(bookDTO.getBuildId()).getBuildName();
         System.out.println(id);
+    }
+    @Test
+    public void delBuild1() throws Exception {
+        BuildService buildService=new BuildServiceImpl();
+        List<BookBuildDTO> buildList = buildService.getBuildList();
+        for (BookBuildDTO bookBuildDTO:buildList){
+            System.out.println("获取到的书架"+bookBuildDTO);
+        }
     }
 }

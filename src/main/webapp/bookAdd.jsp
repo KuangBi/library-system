@@ -80,6 +80,6 @@
 
 
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="https://cdn.jsdelivr.net/npm/@bootcss/v3.bootcss.com@1.0.29/assets/js/ie10-viewport-bug-workaround.js"></script>
+
 </body>
 </html>
